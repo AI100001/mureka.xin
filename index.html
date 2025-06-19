@@ -1,170 +1,830 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monster Survivors - Fight Endless Waves of Monsters</title>
-    <meta name="description" content="Survive endless waves of monsters in this action-packed roguelike game. Upgrade your character, collect powerful items, and face increasingly difficult challenges.">
-    <link rel="canonical" href="https://monstersurvivors.com">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        apple: {
-                            blue: '#007AFF',
-                            red: '#FF3B30',
-                            green: '#34C759',
-                            purple: '#AF52DE',
-                            yellow: '#FFCC00',
-                            orange: '#FF9500',
-                            dark: '#1C1C1E',
-                            gray: '#8E8E93',
-                            lightgray: '#F2F2F7'
-                        }
-                    }
-                }
-            }
+    <title>开源网页游戏合集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    </script>
-    <style type="text/css">
-        @media (max-width: 640px) {
-            .game-container {
-                height: 70vh;
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .category-icon {
+            font-size: 1.2em;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .game-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        
+        .game-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .play-btn:hover {
+            background: linear-gradient(45deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .source-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .source-btn:hover {
+            background: linear-gradient(45deg, #1976D2, #1565C0);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .search-box {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .search-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-actions {
+                flex-direction: column;
             }
         }
     </style>
 </head>
-<body class="bg-apple-lightgray text-apple-dark">
-    <header class="bg-apple-blue text-white p-4 md:p-6 shadow-md">
-        <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="text-center md:text-left mb-4 md:mb-0">
-                    <h1 class="text-3xl md:text-4xl font-bold">Monster Survivors</h1>
-                    <p class="text-lg mt-2">Survive and fight against endless waves of monsters!</p>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 开源网页游戏合集</h1>
+            <p>精选自 GitHub 的优质开源网页游戏，无需下载，点击即玩！</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">精选游戏</span>
                 </div>
-                <nav>
-                    <ul class="flex space-x-4">
-                        <li><a href="#game" class="hover:text-apple-yellow transition-colors">Play Now</a></li>
-                        <li><a href="#about" class="hover:text-apple-yellow transition-colors">About</a></li>
-                        <li><a href="#features" class="hover:text-apple-yellow transition-colors">Features</a></li>
-                        <li><a href="#controls" class="hover:text-apple-yellow transition-colors">Controls</a></li>
-                    </ul>
-                </nav>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">开源免费</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">下载安装</span>
+                </div>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="🔍 搜索游戏..." onkeyup="searchGames(this.value)">
             </div>
         </div>
-    </header>
 
-    <main class="container mx-auto p-4 md:p-6">
-        <section id="game" class="my-8">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-apple-blue">Play Monster Survivors</h2>
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="game-container w-full h-screen max-h-[600px]">
-                    <iframe src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html" 
-                            class="w-full h-full border-0" 
-                            allowfullscreen></iframe>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="my-12">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-apple-blue">About Monster Survivors</h2>
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <p class="mb-4">Monster Survivors is an action-packed roguelike survival game where you must fight against endless waves of monsters. Each run is unique, with random enemy spawns, power-ups, and challenges to overcome.</p>
-                <p>Inspired by games like Vampire Survivors, this game combines fast-paced action with strategic character building. How long can you survive as the difficulty continuously increases?</p>
-            </div>
-        </section>
-
-        <section id="features" class="my-12">
-            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-apple-blue">Game Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-orange mb-3">Multiple Characters</h3>
-                    <p>Choose from various characters, each with unique starting weapons and abilities.</p>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-green mb-3">Weapon Evolution</h3>
-                    <p>Combine weapons and passive items to create powerful evolved weapons with special effects.</p>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-purple mb-3">Level Up System</h3>
-                    <p>Gain experience by defeating enemies and level up to choose new weapons or upgrades.</p>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-red mb-3">Boss Battles</h3>
-                    <p>Face off against massive boss monsters that appear at specific time intervals.</p>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-yellow mb-3">Treasure Chests</h3>
-                    <p>Find and open treasure chests to receive random items, gold, or special power-ups.</p>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-apple-blue mb-3">Daily Challenges</h3>
-                    <p>Complete daily challenges to earn rewards and climb the global leaderboard.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="controls" class="my-12">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-apple-blue">Game Controls</h2>
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <h3 class="text-xl font-semibold text-apple-purple mb-3">Keyboard Controls</h3>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><span class="font-semibold">WASD or Arrow Keys:</span> Move your character</li>
-                            <li><span class="font-semibold">Space:</span> Pause the game</li>
-                            <li><span class="font-semibold">E or Enter:</span> Select/Confirm</li>
-                            <li><span class="font-semibold">Esc:</span> Back/Menu</li>
-                        </ul>
+        <!-- 棋类游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">♟️</span>
+                棋类游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">3D Hartwig Chess Set</h3>
+                    <p class="game-description">精美的3D国际象棋游戏，使用HTML/CSS/JS开发，支持人机对战和双人对战。</p>
+                    <div class="game-actions">
+                        <a href="https://www.oscarchess.com/3dchess/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/juliangarnier/3D-Hartwig-chess-set" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-apple-orange mb-3">Mobile Controls</h3>
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li><span class="font-semibold">Virtual Joystick:</span> Appears on the left side of the screen for movement</li>
-                            <li><span class="font-semibold">Tap Buttons:</span> Menu and action buttons on the right side</li>
-                            <li><span class="font-semibold">Swipe:</span> Navigate menus and selection screens</li>
-                        </ul>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Connect Four (c4)</h3>
+                    <p class="game-description">经典四子棋游戏，支持AI对战，使用HTML/CSS/JS实现，策略性十足。</p>
+                    <div class="game-actions">
+                        <a href="https://kenrick95.github.io/c4/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/kenrick95/c4" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Lichess</h3>
+                    <p class="game-description">免费在线国际象棋平台，使用HTML5和WebSocket技术，支持实时对战和复盘分析。</p>
+                    <div class="game-actions">
+                        <a href="https://lichess.org/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/ornicar/lila" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Green Mahjong</h3>
+                    <p class="game-description">单人麻将消除游戏，经典的纸牌消除玩法，支持多种布局。</p>
+                    <div class="game-actions">
+                        <a href="https://greenmahjong.github.io/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/greenmahjong/greenmahjong.github.io" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
 
-    <footer class="bg-apple-dark text-white p-6">
-        <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p>&copy; 2025 Monster Survivors. All rights reserved.</p>
+        <!-- 街机游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🕹️</span>
+                街机游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">Asteroids</h3>
+                    <p class="game-description">经典小行星射击游戏的JavaScript重制版，操控飞船在太空中消灭小行星。</p>
+                    <div class="game-actions">
+                        <a href="https://bencentra.github.io/asteroids/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/bencentra/asteroids" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
                 </div>
-                <div class="flex space-x-4">
-                    <a href="#" class="hover:text-apple-blue transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-apple-blue transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-apple-blue transition-colors">Contact</a>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Clumsy Bird</h3>
+                    <p class="game-description">Flappy Bird的JavaScript克隆版本，使用MelonJS引擎开发，挑战你的反应能力。</p>
+                    <div class="game-actions">
+                        <a href="https://ellisonleao.github.io/clumsy-bird/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/ellisonleao/clumsy-bird" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Coffee Snake</h3>
+                    <p class="game-description">使用CoffeeScript编写的HTML5贪吃蛇游戏，经典游戏的现代化实现。</p>
+                    <div class="game-actions">
+                        <a href="https://dommmel.github.io/coffee-snake/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/dommmel/coffee-snake" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Breakout</h3>
+                    <p class="game-description">经典打砖块游戏的HTML5版本，支持多人在线游戏模式。</p>
+                    <div class="game-actions">
+                        <a href="https://breakoutjs.github.io/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/breakoutjs/breakout" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Ball And Wall</h3>
+                    <p class="game-description">纯JavaScript实现的Arkanoid风格打砖块游戏，简洁而有趣。</p>
+                    <div class="game-actions">
+                        <a href="https://woubuc.github.io/ball-and-wall/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/woubuc/ball-and-wall" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Arashi</h3>
+                    <p class="game-description">街机游戏Tempest的克隆版本，在隧道中射击敌人，视觉效果炫酷。</p>
+                    <div class="game-actions">
+                        <a href="https://local-host.github.io/arashi-js/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/local-host/arashi-js" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Avabranch</h3>
+                    <p class="game-description">GitHub Game Off 2012的参赛作品，创意独特的益智游戏。</p>
+                    <div class="game-actions">
+                        <a href="https://avabranch.zolmeister.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/Zolmeister/avabranch" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Ceros Snake</h3>
+                    <p class="game-description">经典70年代贪吃蛇游戏的重制版，现代化的视觉效果。</p>
+                    <div class="game-actions">
+                        <a href="https://ceros.github.io/snake/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/ceros/snake" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">CHANG€</h3>
+                    <p class="game-description">关于超市收银员极端生活的紧张游戏，体验收银工作的压力。</p>
+                    <div class="game-actions">
+                        <a href="https://play.google.com/store/apps/details?id=com.schm.change" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/Seluj78/change" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
 
-    <!-- JSON-LD structured data for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoGame",
-        "name": "Monster Survivors",
-        "description": "Survive endless waves of monsters in this action-packed roguelike game. Upgrade your character, collect powerful items, and face increasingly difficult challenges.",
-        "genre": ["Action", "Roguelike", "Survival"],
-        "playMode": "SinglePlayer",
-        "applicationCategory": "Game",
-        "url": "https://monstersurvivors.com",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/InStock"
+        <!-- 休闲益智 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🧩</span>
+                休闲益智
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">2048</h3>
+                    <p class="game-description">经典的数字合并益智游戏，滑动数字方块达到2048的目标。</p>
+                    <div class="game-actions">
+                        <a href="https://play2048.co/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/gabrielecirulli/2048" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">HexGL</h3>
+                    <p class="game-description">未来科幻风格的竞速游戏，使用WebGL技术打造，体验极速飞行的快感。</p>
+                    <div class="game-actions">
+                        <a href="https://hexgl.bkcore.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/BKcore/HexGL" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Coil</h3>
+                    <p class="game-description">创新的HTML5画布游戏，通过包围敌人的轨迹来击败它们。</p>
+                    <div class="game-actions">
+                        <a href="https://hakim.se/experiments/html5/coil/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/hakimel/Coil" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Color Quest</h3>
+                    <p class="game-description">无限跑酷游戏，跟随黑白像素的冒险，目标是变成彩色像素。</p>
+                    <div class="game-actions">
+                        <a href="https://redbluegames.com/color-quest/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/redbluegames/color-quest" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Chromacore</h3>
+                    <p class="game-description">2D音乐平台游戏，在黑白世界中通过成功游玩逐渐增加色彩。</p>
+                    <div class="game-actions">
+                        <a href="https://chromacore.io/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/Spoonail-Iroiro/chromacore" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Core Committer</h3>
+                    <p class="game-description">GitHub Game Off 2012参赛作品，程序员主题的创意游戏。</p>
+                    <div class="game-actions">
+                        <a href="https://schonstal.itch.io/core-committer" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/schonstal/core-committer" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Custom Tetris</h3>
+                    <p class="game-description">经典俄罗斯方块游戏的自定义版本，支持多种游戏模式。</p>
+                    <div class="game-actions">
+                        <a href="https://tetris.com/play-tetris" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/GameGeezer/tetris" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 动作冒险 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">⚔️</span>
+                动作冒险
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">BrowserQuest</h3>
+                    <p class="game-description">Mozilla开发的HTML5 MMORPG游戏，支持多人在线冒险，经典的像素风格。</p>
+                    <div class="game-actions">
+                        <a href="https://browserquest.mozilla.org/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/mozilla/BrowserQuest" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Captain Rogers</h3>
+                    <p class="game-description">Rogers队长：天狼星小行星带，使用ImpactJS创建的HTML5移动游戏。</p>
+                    <div class="game-actions">
+                        <a href="https://rogers.enclavegames.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/EnclaveGames/Captain-Rogers" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Jolly Jumper</h3>
+                    <p class="game-description">使用Phaser引擎制作的平台跳跃游戏，欢快的音乐和流畅的操作体验。</p>
+                    <div class="game-actions">
+                        <a href="https://jolly-jumper.netlify.app/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/gablaxian/jolly-jumper" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Alien Invasion</h3>
+                    <p class="game-description">移动HTML5游戏开发的演示游戏，经典的外星人入侵射击游戏。</p>
+                    <div class="game-actions">
+                        <a href="https://alien-invasion.netlify.app/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/cykod/AlienInvasion" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 策略游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🏰</span>
+                策略游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">Command & Conquer</h3>
+                    <p class="game-description">经典即时战略游戏的网页版本，体验指挥与征服的乐趣。</p>
+                    <div class="game-actions">
+                        <a href="https://cnc.js.org/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/adityaravishankar/command-and-conquer" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Freeciv-web</h3>
+                    <p class="game-description">免费的文明建设策略游戏网页版，建设你的文明帝国。</p>
+                    <div class="game-actions">
+                        <a href="https://www.freecivweb.org/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/freeciv/freeciv-web" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Desperate Gods</h3>
+                    <p class="game-description">免费在线桌游，设计为像现实中的桌游一样游玩，电脑不强制执行规则。</p>
+                    <div class="game-actions">
+                        <a href="https://desperategods.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/ncase/desperate-gods" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 竞速游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🏎️</span>
+                竞速游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">HexGL</h3>
+                    <p class="game-description">未来科幻风格的竞速游戏，使用WebGL技术，体验极速飞行竞赛。</p>
+                    <div class="game-actions">
+                        <a href="https://hexgl.bkcore.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/BKcore/HexGL" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Trigger Rally</h3>
+                    <p class="game-description">开源的3D汽车拉力赛游戏，支持多种赛道和车辆选择。</p>
+                    <div class="game-actions">
+                        <a href="https://triggerrally.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/CodeArtemis/TriggerRally" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第一人称射击 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🔫</span>
+                第一人称射击
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">BananaBread</h3>
+                    <p class="game-description">基于WebGL的第一人称射击游戏，使用Emscripten移植的Cube 2引擎。</p>
+                    <div class="game-actions">
+                        <a href="https://kripken.github.io/BananaBread/cube2/bb.html" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/kripken/BananaBread" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 沙盒游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">🏗️</span>
+                沙盒游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">Craft.js</h3>
+                    <p class="game-description">Minecraft风格的WebGL 3D沙盒游戏，支持建造和探索。</p>
+                    <div class="game-actions">
+                        <a href="https://www.craft.js.org/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/minecraftjs/craftjs" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Voxel.js</h3>
+                    <p class="game-description">基于Three.js的体素引擎，可以创建类似Minecraft的世界。</p>
+                    <div class="game-actions">
+                        <a href="http://voxeljs.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/maxogden/voxel-engine" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 点击游戏 -->
+        <div class="category">
+            <h2 class="category-title">
+                <span class="category-icon">👆</span>
+                点击游戏
+            </h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3 class="game-title">Cookie Clicker</h3>
+                    <p class="game-description">经典的点击放置游戏，点击制作曲奇饼干，解锁各种升级。</p>
+                    <div class="game-actions">
+                        <a href="https://orteil.dashnet.org/cookieclicker/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/Orteil/cookieclicker" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3 class="game-title">Swarm Simulator</h3>
+                    <p class="game-description">管理虫群的放置游戏，通过繁殖和进化建立庞大的生物群落。</p>
+                    <div class="game-actions">
+                        <a href="https://www.swarmsim.com/" class="play-btn" target="_blank">
+                            🎮 立即游玩
+                        </a>
+                        <a href="https://github.com/erosson/swarm" class="source-btn" target="_blank">
+                            📦 源代码
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>本游戏合集收录了来自 <a href="https://github.com/leereilly/games" target="_blank">leereilly/games</a> 的精选开源网页游戏</p>
+            <p>所有游戏均为开源免费，感谢开发者们的贡献！</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">
+                🎮 点击游戏即可开始游玩 | 📦 查看源代码学习开发技术
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function searchGames(query) {
+            const cards = document.querySelectorAll('.game-card');
+            const categories = document.querySelectorAll('.category');
+            query = query.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.game-title').textContent.toLowerCase();
+                const description = card.querySelector('.game-description').textContent.toLowerCase();
+                const matches = title.includes(query) || description.includes(query);
+                card.style.display = matches || query === '' ? 'block' : 'none';
+            });
+
+            // 隐藏没有可见游戏的分类
+            categories.forEach(category => {
+                const visibleGames = category.querySelectorAll('.game-card[style="display: block"], .game-card:not([style*="display: none"])');
+                category.style.display = visibleGames.length > 0 || query === '' ? 'block' : 'none';
+            });
         }
-    }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎮 开源网页游戏合集已加载');
+            
+            // 统计游戏数量
+            const totalGames = document.querySelectorAll('.game-card').length;
+            const statNumber = document.querySelector('.stat-number');
+            if (statNumber && totalGames > 0) {
+                statNumber.textContent = totalGames;
+            }
+        });
     </script>
 </body>
 </html>
